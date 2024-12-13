@@ -1,3 +1,4 @@
+import path from 'node:path'
 import Database from 'better-sqlite3';
 
 const DATABASE_PATH = path.resolve('../database.sqlite');

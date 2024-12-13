@@ -1,7 +1,7 @@
 import path from 'node:path'
 import { createReadStream } from 'node:fs';
 import { parse } from "csv-parse";
-import { createUserTable, db, insertUser } from './database';
+import { createUserTable, db, insertUser } from './database.mjs';
 const CSV_FILE_PATH = path.resolve('../out/data.csv');
 
 createUserTable();
@@ -27,7 +27,7 @@ createReadStream(CSV_FILE_PATH)
         phone
       })
 
-      console.log('User inserted with id:', result.lastInsertRowid);
+      // console.log('User inserted with id:', result.lastInsertRowid);
     } catch (error) {
       errors.push(error);
     }
