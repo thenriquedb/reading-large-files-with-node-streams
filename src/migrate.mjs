@@ -7,6 +7,7 @@ const CSV_FILE_PATH = path.resolve('../out/data.csv');
 createUserTable();
 
 const errors = [];
+let insertedCount = 0;
 
 console.log('Start migration...');
 createReadStream(CSV_FILE_PATH)
@@ -14,7 +15,7 @@ createReadStream(CSV_FILE_PATH)
     parse({
       delimiter: ',',
       trim: true,
-      from_line: 2
+      from_line: 1
     }))
   .on('data', (row) => {
     try {
@@ -27,6 +28,7 @@ createReadStream(CSV_FILE_PATH)
         phone
       })
 
+      insertedCount++;
       // console.log('User inserted with id:', result.lastInsertRowid);
     } catch (error) {
       errors.push(error);
@@ -36,6 +38,6 @@ createReadStream(CSV_FILE_PATH)
     console.error('Error', error.message);
   })
   .on('end', () => {
-    console.log(`Migration finished with ${errors.length} errors.`);
+    console.log(`Migration finished with ${insertedCount} users inserted. Errors: ${errors.length}`);
     db.close();
   })
